@@ -19,27 +19,30 @@ This repository contains the circuit connections and firmware setup for the VSDS
 ## Pin Connections
 The VSDSquadron Mini (CH32V003F4U6-based) has limited UART, I2C, and GPIO pins, so we need to assign them carefully.
 
-1️⃣ ESP8266 (WiFi Module)
+1️) ESP8266 (WiFi Module)
 ESP8266 TX → VSDSquadron Mini PD6 (UART RX)
 ESP8266 RX → VSDSquadron Mini PD5 (UART TX)
 ESP8266 VCC → 3.3V
 ESP8266 GND → GND
-2️⃣ SIM800L (GSM Module)
+
+2️) SIM800L (GSM Module)
 SIM800L TX → VSDSquadron Mini PD6 (Shared UART RX with ESP8266)
 SIM800L RX → VSDSquadron Mini PD5 (Shared UART TX with ESP8266)
 SIM800L VCC → 4.2V Power Supply
 SIM800L GND → GND
 
-3️⃣ MPU6050 (Accelerometer & Gyroscope)
+3️) MPU6050 (Accelerometer & Gyroscope)
 MPU6050 SDA → VSDSquadron Mini PC1 (I2C SDA)
 MPU6050 SCL → VSDSquadron Mini PC2 (I2C SCL)
 MPU6050 VCC → 3.3V
 MPU6050 GND → GND
-4️⃣ DHT11 (Temperature & Humidity Sensor)
+
+4️) DHT11 (Temperature & Humidity Sensor)
 DHT11 Data → VSDSquadron Mini PD0
 DHT11 VCC → 3.3V
 DHT11 GND → GND
-5️⃣ NEO-6M GPS Module
+
+5️) NEO-6M GPS Module
 GPS TX → VSDSquadron Mini PA0 (Software Serial RX)
 GPS RX → VSDSquadron Mini PA1 (Software Serial TX)
 GPS VCC → 3.3V
@@ -53,7 +56,8 @@ GPS GND → GND
 #include <Wire.h>            // I2C for MPU6050
 #include <SoftwareSerial.h>  // Soft Serial for GPS & GSM
 #include "DHT.h"             // DHT11 library
-
+#include <ch32v00x.h>
+#include <ch32v00x_gpio.h>
 // PIN Assignments
 #define DHTPIN PD0
 #define DHTTYPE DHT11
@@ -73,7 +77,7 @@ void sendAlertSMS(String message) {
     Serial.println("Sending SMS Alert...");
     gsmSerial.println("AT+CMGF=1");  // Set SMS mode
     delay(1000);
-    gsmSerial.println("AT+CMGS=\"+91xxxxxxxxxx\"");  // Replace with phone number
+    gsmSerial.println("AT+CMGS=\"+91xxxxxxxxxx\"");  // Replace with volunteer or vertinary doctor's mobile number
     delay(1000);
     gsmSerial.print(message);
     delay(1000);
@@ -170,11 +174,11 @@ https://drive.google.com/file/d/10mVwB8beWYo9Sr0sMCDud-_ZU_CJZYiU/view?usp=drive
 This project successfully integrates multiple communication and sensor modules with the VSDSquadron Mini microcontroller, effectively utilizing limited GPIO and UART resources. The system allows for real-time data acquisition, wireless transmission, and GPS tracking. The implemented firmware efficiently manages UART switching and sensor data processing.
 
 **Results:**
-- **WiFi connectivity achieved via ESP8266**, enabling remote communication.
+- **GPS tracking with NEO-6M**, providing location data over software serial.
 - **GSM functionality established using SIM800L**, allowing SMS and call operations.
 - **Accurate motion sensing through MPU6050**, providing real-time gyroscope and accelerometer readings.
 - **Temperature and humidity monitoring with DHT11**, ensuring environmental tracking.
-- **GPS tracking with NEO-6M**, providing location data over software serial.
+- **WiFi connectivity achieved via ESP8266**, enabling remote communication.
 
 Overall, the project successfully demonstrates a compact and efficient IoT-based system that can be extended for various real-world applications such as smart tracking, remote monitoring, and data logging.
 
