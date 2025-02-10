@@ -159,13 +159,8 @@ void loop() {
 ```
 
 ## Output Video
-<video width="640" height="360" controls>
-  <source src="CIRCUIT.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-
-## Notes
+https://drive.google.com/file/d/10mVwB8beWYo9Sr0sMCDud-_ZU_CJZYiU/view?usp=drive_link
+## [Notes]
 - **ESP8266 and SIM800L share the same UART (PD6 & PD5)**, requiring careful switching using software control.
 - **SIM800L requires a stable 4.2V power source**, ensuring sufficient current (~2A peak) with a capacitor for stability.
 - **GPS module runs on software serial (PA0 & PA1)**, which may need baud rate tuning for optimal performance.
