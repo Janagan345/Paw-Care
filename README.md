@@ -14,8 +14,10 @@ Millions of stray dogs struggle daily with hunger, untreated diseases, and lack 
 | Jumper Wires           | 1 set    | Male-to-male and female-to-male jumper wires                 | [Jumper Wires](https://amzn.in/d/abTh8bo)           |
 | Micro USB Cable        | 1        | For programming and power supply                             | [Micro USB Cable](https://amzn.in/d/9b3ttSo)        |
 | GPS       | 1        | location tracker                            | [gps](https://www.amazon.in/NEO-8M-GPS-Module-Micro-Interface/dp/B0C1V8P4HJ/ref=asc_df_B0C1V8P4HJ/?tag=googleshopdes-21&linkCode=df0&hvadid=709963085501&hvpos=&hvnetw=g&hvrand=17686159335378910175&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1007812&hvtargid=pla-2350755046754&mcid=fbf4243ee00f3b43ab77553dc337f7e8&gad_source=1&th=1)        |
-| Sim800L       | 1        | gsm module                             | [GSM MODULE](https://www.amazon.in/Robodo-Electronics-SIM800LTTL-Module-Quad-Band/dp/B07B92T3K7/ref=asc_df_B07B92T3K7/?tag=googleshopdes-21&linkCode=df0&hvadid=709963085501&hvpos=&hvnetw=g&hvrand=13047581882593455737&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1007812&hvtargid=pla-882892903166&psc=1&mcid=e76a14c065e03bbab6df00c1c2a2b50d&gad_source=1)        |
-| Accelerometer      | 1        | movement tracker                            | [mcu6050](https://amzn.in/d/9b3ttSo)        |
+| Sim800L       | 1        | GSM module                             | [GSM MODULE](https://www.amazon.in/Robodo-Electronics-SIM800LTTL-Module-Quad-Band/dp/B07B92T3K7/ref=asc_df_B07B92T3K7/?tag=googleshopdes-21&linkCode=df0&hvadid=709963085501&hvpos=&hvnetw=g&hvrand=13047581882593455737&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1007812&hvtargid=pla-882892903166&psc=1&mcid=e76a14c065e03bbab6df00c1c2a2b50d&gad_source=1)        |
+| Accelerometer      | 1        | movement tracker                            | [MPU6050](https://amzn.in/d/9b3ttSo)        |
+| Battery Managament Module(BMS)      | 1        | Battery Protection & Optimization| [TP4056](https://www.amazon.in/SOOTRA-TP4056-lithium-Battery-Charging/dp/B0BGY2YDVL?th=1))        |
+|  Li-Po Rechargeable Battery    | 1        | Power Supply                          | (https://www.amazon.com/dp/B09YQ2QPVL?ref=emc_s_m_5_i_atc)   |
 
 
 ## Pin Connections
