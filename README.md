@@ -19,7 +19,7 @@ Millions of stray dogs struggle daily with hunger, untreated diseases, and lack 
 
 
 ## Pin Connections
-The VSDSquadron Mini (CH32V003F4U6-based) has limited UART, I2C, and GPIO pins, so we need to assign them carefully.
+The VSDSquadron Mini (CH32V003F4U6-based) has UART, I2C, and GPIO pins.
 
 1️) ESP8266 (WiFi Module)
 ESP8266 TX → VSDSquadron Mini PD6 (UART RX)
@@ -30,7 +30,7 @@ ESP8266 GND → GND
 2️) SIM800L (GSM Module)
 SIM800L TX → VSDSquadron Mini PD6 (Shared UART RX with ESP8266)
 SIM800L RX → VSDSquadron Mini PD5 (Shared UART TX with ESP8266)
-SIM800L VCC → 4.2V Power Supply
+SIM800L VCC → 5V 
 SIM800L GND → GND
 
 3️) MPU6050 (Accelerometer & Gyroscope)
@@ -51,7 +51,10 @@ GPS VCC → 3.3V
 GPS GND → GND
 ## Pinout Diagram
 <img src="CB.jpg" alt="Circuit Diagram" width="500">
-
+## 3D Design for Product Package
+![IMG-20250206-WA0041](https://github.com/user-attachments/assets/88a2ff7d-5c04-4e8e-ac98-6de3eb543fc0)
+![IMG-20250206-WA0039](https://github.com/user-attachments/assets/8c0bd7f3-5143-44f3-be72-222b93090aa7)
+![IMG-20250206-WA0025_2](https://github.com/user-attachments/assets/8f4dbf04-9849-45db-867d-f753f822470a)
 
 ## Working Code
 ```
