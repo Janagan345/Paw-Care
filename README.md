@@ -1,10 +1,10 @@
 # PawCare-Smart Health Tag for Stray Dog Welfare
 ## Introduction
 The VSDSquadron Mini (CH32V003F4U6) is a compact and powerful microcontroller designed for embedded applications. This project integrates multiple communication and sensor modules to create a fully functional IoT-based system. The objective is to enable wireless connectivity, GSM communication, motion tracking, temperature monitoring, and GPS tracking while efficiently managing limited UART, I2C, and GPIO resources. The firmware is designed to handle data acquisition, processing, and transmission, making it suitable for applications such as remote monitoring, smart tracking, and IoT automation.
-##Need of PawCare
-Millions of stray dogs struggle daily with hunger, untreated diseases, and lack of care. Without proper monitoring, their health deteriorates, leading to suffering and the spread of infections. PawCare is the game-changer—using smart technology to detect hunger, predict diseases early, and enhance their overall welfare. By addressing these critical issues, PawCare ensures a healthier, safer life for stray dogs while promoting a compassionate and responsible society.
 ## Overview
 This repository contains the circuit connections and firmware setup for the VSDSquadron Mini (CH32V003F4U6-based) microcontroller integrating multiple modules. The purpose of this setup is to provide wireless connectivity, GSM communication, motion tracking, temperature monitoring, and GPS tracking in a compact and efficient manner.
+## Need of PawCare
+Millions of stray dogs struggle daily with hunger, untreated diseases, and lack of care. Without proper monitoring, their health deteriorates, leading to suffering and the spread of infections. PawCare is the game-changer—using smart technology to detect hunger, predict diseases early, and enhance their overall welfare. By addressing these critical issues, PawCare ensures a healthier, safer life for stray dogs while promoting a compassionate and responsible society.
 ## Components required with Bill of Materials
 | Item                   | Quantity | Description                                                   | Links to Products                                      |
 |------------------------|----------|---------------------------------------------------------------|---------------------------------------------------|
