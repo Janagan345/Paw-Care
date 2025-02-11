@@ -15,7 +15,7 @@ Millions of stray dogs struggle daily with hunger, untreated diseases, and lack 
 | Micro USB Cable        | 1        | For programming and power supply                             | [Micro USB Cable](https://amzn.in/d/9b3ttSo)        |
 | GPS Module   | 1        | location tracker                            | [GPS](https://www.amazon.in/NEO-8M-GPS-Module-Micro-Interface/dp/B0C1V8P4HJ/ref=asc_df_B0C1V8P4HJ/?tag=googleshopdes-21&linkCode=df0&hvadid=709963085501&hvpos=&hvnetw=g&hvrand=17686159335378910175&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1007812&hvtargid=pla-2350755046754&mcid=fbf4243ee00f3b43ab77553dc337f7e8&gad_source=1&th=1)        |
 | Sim800L       | 1        | GSM module                             | [GSM MODULE](https://www.amazon.in/Robodo-Electronics-SIM800LTTL-Module-Quad-Band/dp/B07B92T3K7/ref=asc_df_B07B92T3K7/?tag=googleshopdes-21&linkCode=df0&hvadid=709963085501&hvpos=&hvnetw=g&hvrand=13047581882593455737&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1007812&hvtargid=pla-882892903166&psc=1&mcid=e76a14c065e03bbab6df00c1c2a2b50d&gad_source=1)        |
-| Accelerometer      | 1        | movement tracker                            | [MPU6050](https://amzn.in/d/9b3ttSo)        |
+| Accelerometer      | 1        | Movement tracker                            | [MPU6050](https://amzn.in/d/9b3ttSo)        |
 | Battery Managament Module(BMS)      | 1        | Battery Protection & Optimization| [TP4056](https://www.amazon.in/SOOTRA-TP4056-lithium-Battery-Charging/dp/B0BGY2YDVL?th=1))        |
 |  Li-Po Rechargeable Battery    | 1        | Power Supply                          | [Li-Po](https://www.amazon.com/dp/B09YQ2QPVL?ref=emc_s_m_5_i_atc)   |
 
@@ -64,76 +64,84 @@ GPS GND → GND
 
 ## Working Code
 ```
-#include <Wire.h>            // I2C for MPU6050
-#include <SoftwareSerial.h>  // Soft Serial for GPS & GSM
-#include "DHT.h"             // DHT11 library
+#include <Wire.h>            // For I2C communication (MPU6050)
+#include <SoftwareSerial.h>  // For GSM & GPS module
+#include "DHT.h"             // For DHT sensor
 #include <ch32v00x.h>
 #include <ch32v00x_gpio.h>
-// PIN Assignments
+
+// PIN Configurations
 #define DHTPIN PD0
 #define DHTTYPE DHT11
 
-// Objects for sensors & modules
+// Sensor & Module Objects
 DHT dht(DHTPIN, DHTTYPE);
 SoftwareSerial gpsSerial(PA0, PA1);  // GPS RX, TX
 SoftwareSerial gsmSerial(PD5, PD6);  // SIM800L RX, TX
 
-// Global variables
-float lastTemperature = 0.0;
-float lastHumidity = 0.0;
-bool movementDetected = false;
+// Global Variables
+String receivedCommand = "";
+float temperature, humidity, heatIndex;
+float ax, ay, az;
 
-// Function to send SMS alert via SIM800L
-void sendAlertSMS(String message) {
-    Serial.println("Sending SMS Alert...");
-    gsmSerial.println("AT+CMGF=1");  // Set SMS mode
+// Function to Send SMS
+void sendSMS(String message) {
+    Serial.println("Sending SMS...");
+    gsmSerial.println("AT+CMGF=1");  // SMS mode
     delay(1000);
-    gsmSerial.println("AT+CMGS=\"+91xxxxxxxxxx\"");  // Replace with volunteer or vertinary doctor's mobile number
+    gsmSerial.println("AT+CMGS=\"+91xxxxxxxxxx\"");  // Replace with volenteer or doctor's mobile number
     delay(1000);
     gsmSerial.print(message);
     delay(1000);
-    gsmSerial.write(26);  // End SMS command
+    gsmSerial.write(26);  // End SMS
     delay(5000);
 }
 
-// Function to read & parse GPS data
-void readGPS() {
+// Function to Read GPS Coordinates
+String getGPSLocation() {
     String gpsData = "";
     while (gpsSerial.available()) {
-        char c = gpsSerial.read();
-        gpsData += c;
+        gpsData += (char)gpsSerial.read();
     }
-    Serial.print("GPS Raw Data: ");
-    Serial.println(gpsData);
-    // Extract latitude & longitude (Implement further parsing)
+
+    if (gpsData.indexOf("GPGGA") > 0) {  // Check if GPS data is valid
+        int latStart = gpsData.indexOf(",") + 1;
+        int lonStart = gpsData.indexOf(",", latStart + 1) + 1;
+        
+        String latitude = gpsData.substring(latStart, lonStart - 1);
+        String longitude = gpsData.substring(lonStart, lonStart + 9);
+
+        Serial.println("Preparing to send location...");
+        delay(2000);
+        
+        String googleMapsLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+        sendSMS("Location Sent: " + googleMapsLink);
+        return googleMapsLink;
+    }
+    
+    return "GPS data not available.";
 }
 
-// Function to read DHT11 sensor
+// Function to Read DHT Sensor Data
 void readDHT() {
-    float temperature = dht.readTemperature();
-    float humidity = dht.readHumidity();
+    temperature = dht.readTemperature();
+    humidity = dht.readHumidity();
+    heatIndex = dht.computeHeatIndex(temperature, humidity, false);
 
     if (isnan(temperature) || isnan(humidity)) {
-        Serial.println("DHT11 Sensor Error!");
+        Serial.println("DHT Sensor Error!");
         return;
     }
 
     Serial.print("Temperature: "); Serial.print(temperature); Serial.println("°C");
     Serial.print("Humidity: "); Serial.print(humidity); Serial.println("%");
-
-    // Send alert if temperature goes too high
-    if (temperature > 40.0 && lastTemperature <= 40.0) {
-        sendAlertSMS("Warning! High temperature detected.");
-    }
-
-    lastTemperature = temperature;
-    lastHumidity = humidity;
+    Serial.print("Heat Index: "); Serial.print(heatIndex); Serial.println("°C");
 }
 
-// Function to detect motion from MPU6050
-void detectMotion() {
-    Wire.beginTransmission(0x68); // MPU6050 I2C Address
-    Wire.write(0x3B); // Accelerometer register
+// Function to Read MPU6050 (Acceleration Data)
+void readMPU6050() {
+    Wire.beginTransmission(0x68);
+    Wire.write(0x3B);
     Wire.endTransmission(false);
     Wire.requestFrom(0x68, 6, true);
 
@@ -141,19 +149,16 @@ void detectMotion() {
     int16_t AccY = Wire.read() << 8 | Wire.read();
     int16_t AccZ = Wire.read() << 8 | Wire.read();
 
-    float ax = AccX / 16384.0;
-    float ay = AccY / 16384.0;
-    float az = AccZ / 16384.0;
+    ax = AccX / 16384.0;
+    ay = AccY / 16384.0;
+    az = AccZ / 16384.0;
 
-    if (ax > 2.0 || ay > 2.0 || az > 2.0) {
-        Serial.println("⚠ Motion Detected!");
-        movementDetected = true;
-        sendAlertSMS("PawCare Alert: Sudden movement detected!");
-    } else {
-        movementDetected = false;
-    }
+    Serial.print("Acceleration X: "); Serial.println(ax);
+    Serial.print("Acceleration Y: "); Serial.println(ay);
+    Serial.print("Acceleration Z: "); Serial.println(az);
 }
 
+// Setup Function
 void setup() {
     Serial.begin(9600);
     gpsSerial.begin(9600);
@@ -162,15 +167,25 @@ void setup() {
     dht.begin();
 
     Serial.println("PawCare System Initialized!");
+    Serial.println("Waiting for command...");
 }
 
+// Main Loop
 void loop() {
-    readDHT();     // Read temperature & humidity
-    readGPS();     // Read GPS location
-    detectMotion(); // Check for sudden movements
+    if (Serial.available()) {
+        receivedCommand = Serial.readStringUntil('\n');
+        Serial.println("Received the command");
 
-    delay(2000); // Delay for stability
+        readDHT();
+        readMPU6050();
+        String location = getGPSLocation();
+
+        Serial.println(location);
+    }
+
+    delay(2000);
 }
+
 ```
 
 ## Output Video
