@@ -51,10 +51,14 @@ GPS VCC → 3.3V
 GPS GND → GND
 ## Pinout Diagram
 <img src="CB.jpg" alt="Circuit Diagram" width="500">
+
 ## 3D Design for Product Package
 ![IMG-20250206-WA0041](https://github.com/user-attachments/assets/88a2ff7d-5c04-4e8e-ac98-6de3eb543fc0)
+
 ![IMG-20250206-WA0039](https://github.com/user-attachments/assets/8c0bd7f3-5143-44f3-be72-222b93090aa7)
+
 ![IMG-20250206-WA0025_2](https://github.com/user-attachments/assets/8f4dbf04-9849-45db-867d-f753f822470a)
+
 
 ## Working Code
 ```
@@ -171,9 +175,9 @@ void loop() {
 https://drive.google.com/file/d/10mVwB8beWYo9Sr0sMCDud-_ZU_CJZYiU/view?usp=drive_link
 ## [Notes]
 - **ESP8266 and SIM800L share the same UART (PD6 & PD5)**, requiring careful switching using software control.
-- **SIM800L requires a stable 4.2V power source**, ensuring sufficient current (~2A peak) with a capacitor for stability.
+- **SIM800L requires a stable 4.2V-5V power source**, ensuring sufficient current (~2A peak) with a capacitor for stability.
 - **GPS module runs on software serial (PA0 & PA1)**, which may need baud rate tuning for optimal performance.
-- **MPU6050 operates on I2C and should have proper pull-up resistors if necessary.**
+- **MPU6050 operates on I2C and should have proper pull-up resistors if needed.**
 
 ## Conclusion & Results
 This project successfully integrates multiple communication and sensor modules with the VSDSquadron Mini microcontroller, effectively utilizing limited GPIO and UART resources. The system allows for real-time data acquisition, wireless transmission, and GPS tracking. The implemented firmware efficiently manages UART switching and sensor data processing.
