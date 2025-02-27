@@ -18,6 +18,7 @@ Millions of stray dogs struggle daily with hunger, untreated diseases, and lack 
 | Accelerometer      | 1        | Movement tracker                            | [MPU6050](https://amzn.in/d/9b3ttSo)        |
 | Battery Managament Module(BMS)      | 1        | Battery Protection & Optimization| [TP4056](https://www.amazon.in/SOOTRA-TP4056-lithium-Battery-Charging/dp/B0BGY2YDVL?th=1))        |
 |  Li-Po Rechargeable Battery    | 1        | Power Supply                          | [Li-Po](https://www.amazon.com/dp/B09YQ2QPVL?ref=emc_s_m_5_i_atc)   |
+|  Filament for 3d printing    | 1        | Product Case                         | [Filament](https://amzn.in/d/fpcCP8y)   |
 
 
 ## Pin Connections
